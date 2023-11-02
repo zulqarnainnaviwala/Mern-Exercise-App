@@ -1,5 +1,6 @@
 import express from "express";
 import workoutRoutes from "./routes/workout-routes.js";
+import userRoutes from "./routes/user-routes.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -17,7 +18,8 @@ app.use((request, response, next) => {
   next();
 });
 
-app.use("/api/workouts/", workoutRoutes);
+app.use("/api/workouts", workoutRoutes);
+app.use("/api/user", userRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI)

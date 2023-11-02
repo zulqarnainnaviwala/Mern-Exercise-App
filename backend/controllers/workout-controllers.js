@@ -3,7 +3,12 @@ import mongoose from "mongoose";
 
 export const getAllWorkouts = async (request, response) => {
   try {
-    const allWorkout = await workoutModel.find({}).sort({ createdAt: -1 }); //sort descending order wise (last entered at fiorst place)
+    //to fetch logged in user's workouts
+    const user_id = request.userId._id;
+
+    const allWorkout = await workoutModel
+      .find({ user_id })
+      .sort({ createdAt: -1 }); //sort descending order wise (last entered at fiorst place)
     return response.status(200).json(allWorkout);
   } catch (error) {
     return response.status(404).json({ error: error.message });
@@ -49,7 +54,15 @@ export const createNewWorkout = async (request, response) => {
   }
 
   try {
-    const createWorkout = await workoutModel.create({ title, reps, load });
+    //to create logged in user's workouts
+    const user_id = request.userId._id;
+
+    const createWorkout = await workoutModel.create({
+      title,
+      reps,
+      load,
+      user_id,
+    });
     response
       .status(200)
       .json({ message: "successfully added", data: createWorkout });

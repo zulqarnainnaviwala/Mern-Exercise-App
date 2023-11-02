@@ -14,6 +14,11 @@ const workoutSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    //to track which user data needs to be shown on individual basis
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
