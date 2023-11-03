@@ -4,8 +4,12 @@ import { useWorkoutContext } from "../hooks/useWorkoutContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import EditWorkout from "../components/EditWorkout";
 
+import { useAuthContext } from "../hooks/useAuthContext";
+
 const WorkoutDetail = ({ workout }) => {
   const { dispatch } = useWorkoutContext();
+
+  const { user } = useAuthContext();
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -16,10 +20,16 @@ const WorkoutDetail = ({ workout }) => {
   const [message, setMessage] = useState(null);
 
   const handleDelete = async () => {
+    if (!user) {
+      return;
+    }
     const result = await fetch(
       `http://localhost:3000/api/workouts/${workout._id}`,
       {
         method: "DELETE",
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
       }
     );
     const json = await result.json();
@@ -30,7 +40,12 @@ const WorkoutDetail = ({ workout }) => {
   };
 
   const handleEdit = () => {
-    setIsEditing(true);
+    if (!user) {
+      return;
+    }
+    if (user) {
+      setIsEditing(true);
+    }
   };
 
   const handleSave = async (event) => {
@@ -41,6 +56,7 @@ const WorkoutDetail = ({ workout }) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify(editedWorkout),
       }
