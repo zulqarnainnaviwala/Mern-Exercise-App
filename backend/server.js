@@ -17,6 +17,10 @@ app.use((request, response, next) => {
   console.log(request.path, request.method);
   next();
 });
+// Define the root path '/'
+app.get('/', (req, res) => {
+  res.send('Welcome to the Server !!');
+});
 
 app.use("/api/workouts", workoutRoutes);
 app.use("/api/user", userRoutes);
