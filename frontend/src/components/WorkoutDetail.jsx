@@ -24,7 +24,7 @@ const WorkoutDetail = ({ workout }) => {
       return;
     }
     const result = await fetch(
-      `http://localhost:3000/api/workouts/${workout._id}`,
+      `${import.meta.env.VITE_BASE_URL}/api/workouts/${workout._id}`,
       {
         method: "DELETE",
         headers: {
@@ -51,7 +51,7 @@ const WorkoutDetail = ({ workout }) => {
   const handleSave = async (event) => {
     event.preventDefault();
     const result = await fetch(
-      `http://localhost:3000/api/workouts/${workout._id}`,
+      `${import.meta.env.VITE_BASE_URL}/api/workouts/${workout._id}`,
       {
         method: "PATCH",
         headers: {

@@ -14,11 +14,14 @@ const Home = () => {
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const result = await fetch("http://localhost:3000/api/workouts", {
-        headers: {
-          authorization: `Bearer ${user.token}`,
-        },
-      });
+      const result = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/workouts`,
+        {
+          headers: {
+            authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
       const json = await result.json();
       if (result.ok) {
         // setWorkouts(json);

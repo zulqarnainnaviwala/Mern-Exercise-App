@@ -10,13 +10,16 @@ export const useSignup = () => {
     setIsLoading(true);
     setError(null);
 
-    const result = await fetch("http://localhost:3000/api/user/signup", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const result = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/api/user/signup`,
+      {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const json = await result.json();
 
     if (!result.ok) {

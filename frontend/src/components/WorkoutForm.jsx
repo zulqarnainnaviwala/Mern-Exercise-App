@@ -30,14 +30,17 @@ const WorkoutForm = () => {
       return;
     }
 
-    const result = await fetch("http://localhost:3000/api/workouts", {
-      method: "POST",
-      body: JSON.stringify(form),
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${user.token}`,
-      },
-    });
+    const result = await fetch(
+      `${import.meta.env.VITE_BASE_URL}/api/workouts`,
+      {
+        method: "POST",
+        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     const json = await result.json();
     if (result.ok) {
       setForm(formData);
